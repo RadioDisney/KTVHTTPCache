@@ -58,7 +58,7 @@
     MediaItem *item2 = [[MediaItem alloc] initWithTitle:@"张惠妹 - 你是爱我的"
                                               URLString:@"http://aliuwmp3.changba.com/userdata/video/3B1DDE764577E0529C33DC5901307461.mp4"];
     MediaItem *item3 = [[MediaItem alloc] initWithTitle:@"hush! - 都是你害的"
-                                              URLString:@"http://qiniuuwmp3.changba.com/941946870.mp4"];
+                                              URLString:@"https://gt4ks.poputar.com/popumusic/courses/924a8bdd74434886b50b63de6cdebe02/1b2e145181db2d77688bfde2458bcda7.mp4"];
     MediaItem *item4 = [[MediaItem alloc] initWithTitle:@"张学友 - 我真的受伤了"
                                               URLString:@"http://lzaiuw.changba.com/userdata/video/940071102.mp4"];
     self.items = @[item1, item2, item3, item4];
@@ -89,6 +89,7 @@
     NSString *URLString = [item.URLString stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
     NSURL *URL = [KTVHTTPCache proxyURLWithOriginalURL:[NSURL URLWithString:URLString]];
     MediaViewController *vc = [[MediaViewController alloc] initWithURLString:URL.absoluteString];
+    [vc ]
     [self presentViewController:vc animated:YES completion:nil];
 }
 
