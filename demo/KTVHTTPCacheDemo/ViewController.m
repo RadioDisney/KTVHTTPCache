@@ -89,7 +89,6 @@
     NSString *URLString = [item.URLString stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
     NSURL *URL = [KTVHTTPCache proxyURLWithOriginalURL:[NSURL URLWithString:URLString]];
     MediaViewController *vc = [[MediaViewController alloc] initWithURLString:URL.absoluteString];
-    [vc ]
     [self presentViewController:vc animated:YES completion:nil];
 }
 

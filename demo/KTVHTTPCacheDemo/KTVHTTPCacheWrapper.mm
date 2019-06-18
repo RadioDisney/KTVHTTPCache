@@ -30,11 +30,9 @@
     }];
 }
 
-static BOOL isRunning=false;
-
 + (NSString *) getProxyUrl:(NSString *)originalUrl
 {
-    if (isRunning == false)
+    if (![KTVHTTPCache proxyIsRunning])
     {
         [self setupHTTPCache];
     }
@@ -70,6 +68,38 @@ extern "C"
         NSString* outUrlNS = [KTVHTTPCacheWrapper getProxyUrl:inUrlNS];
         const char* outUrl = [outUrlNS cStringUsingEncoding:NSASCIIStringEncoding];
         return stringCopy(outUrl);
+    }
+    
+    int GetPercent (const char* originalUrl)
+    {
+        NSString* originalUrlNS = [NSString stringWithCString:originalUrl encoding:NSASCIIStringEncoding];
+        NSLog(@"originalUrl : %@", originalUrlNS);
+//        NSArray<KTVHCDataCacheItem *> * cacheItems = [KTVHTTPCache cacheAllCacheItems];
+//
+//        for (KTVHCDataCacheItem* cacheItem in cacheItems) {
+//            NSLog(@"t:%lld, c:%lld, v:%lld === %@\n", cacheItem.totalLength,  cacheItem.cacheLength, cacheItem.vaildLength, cacheItem.URL);
+//        }
+        
+        KTVHCDataCacheItem* cacheItem = [KTVHTTPCache cacheCacheItemWithURLString:originalUrlNS];
+        if (cacheItem != NULL)
+        {
+            NSLog(@"totalLength:%lld, cacheLength:%lld, vaildLength:%lld", cacheItem.totalLength,  cacheItem.cacheLength, cacheItem.vaildLength);
+            return (int)(cacheItem.cacheLength * 100 / cacheItem.totalLength);
+        }
+        else
+        {
+            return 0;
+        }
+    }
+    
+    const char* GetCacheCompleteFileUrlWithUrl (const char* inUrlCString)
+    {
+        NSString* inUrlNSString = [NSString stringWithCString:inUrlCString encoding:NSASCIIStringEncoding];
+        NSURL* inUrl = [NSURL URLWithString:inUrlNSString];
+        NSURL* outUrl = [KTVHTTPCache cacheCompleteFileURLWithURL:inUrl];
+        NSString* outUrlNSString = outUrl.absoluteString;
+        const char* outUrlCString = [outUrlNSString cStringUsingEncoding:NSASCIIStringEncoding];
+        return stringCopy(outUrlCString);
     }
 #ifdef __cplusplus
 }

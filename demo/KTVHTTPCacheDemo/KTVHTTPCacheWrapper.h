@@ -19,6 +19,8 @@ extern "C"
 {
 #endif
     const char* GetProxyUrl (const char* inUrl);
+    int GetPercent (const char* originalUrl);
+    const char* GetCacheCompleteFileUrlWithUrl (const char* inUrlCString);
 #ifdef __cplusplus
 }
 #endif
